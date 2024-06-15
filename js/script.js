@@ -31,7 +31,8 @@ const renderPokemon = async(pokemon) => {
     const data = await fetchPokemon(pokemon)
 
     if (data) {
-        pokemonName.innerHTML = data.name;
+        pokemonImage.style.display = ''
+pokemonName.innerHTML = data.name;
         pokemonNumber.innerHTML = data.id;
         pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']
         input.value = '';

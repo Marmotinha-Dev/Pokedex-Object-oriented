@@ -40,6 +40,11 @@ const renderPokemon = async(pokemon) => {
         pokemonImage.style.display = 'none'
         pokemonName.innerHTML = "Not Found :c";
         pokemonNumber.innerHTML = "";
+        buttonNext.addEventListener('click', () => {
+            searchPokemon += 1;
+            renderPokemon(searchPokemon);
+            pokemonImage.style.display = "";
+        });
     }
 }
 renderPokemon(searchPokemon)

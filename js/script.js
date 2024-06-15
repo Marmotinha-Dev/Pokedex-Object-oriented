@@ -31,6 +31,7 @@ const renderPokemon = async(pokemon) => {
     const data = await fetchPokemon(pokemon)
 
     if (data) {
+        pokemonImage.style.display = ""
         pokemonName.innerHTML = data.name;
         pokemonNumber.innerHTML = data.id;
         pokemonImage.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default']
@@ -40,11 +41,6 @@ const renderPokemon = async(pokemon) => {
         pokemonImage.style.display = 'none'
         pokemonName.innerHTML = "Not Found :c";
         pokemonNumber.innerHTML = "";
-        buttonNext.addEventListener('click', () => {
-            searchPokemon += 1;
-            renderPokemon(searchPokemon);
-            pokemonImage.style.display = "";
-        });
     }
 }
 renderPokemon(searchPokemon)

@@ -1,7 +1,7 @@
 # Pokédex
 
 ## 🌐 Demonstração
-Acesse a aplicação [aqui](https://marmotinha-dev.github.io/Pokedex/)
+Acesse a aplicação [aqui](https://marmotinha-dev.github.io/Pokedex-Object-oriented/)
 
 ## 📚 Pokedex
 Este projeto é uma aplicação web simples para buscar informações sobre Pokémons usando a API PokéAPI. O usuário pode pesquisar um Pokémon pelo seu nome ou número na Pokédex, bem como navegar entre os Pokémons usando botões de próximo e anterior.

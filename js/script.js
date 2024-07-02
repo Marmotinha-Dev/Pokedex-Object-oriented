@@ -5,7 +5,10 @@
 // Define o número inicial do Pokémon a ser buscado
 let searchPokemon = 1;
 
-// Seleciona elementos de inpunt
+// Cache de Pokémon
+const pokemonCache = {};
+
+// Seleciona elementos de input
 const form = document.querySelector('.form'); // Formulário de busca
 const input = document.querySelector('.input__search'); // Campo de entrada de texto
 const buttonPrev = document.querySelector('.btn-prev'); // Botão de Pokémon anterior
@@ -23,12 +26,19 @@ const pokemon = {
     /*-----------[Função de requisição]-----------*/
     // Função assíncrona para buscar dados do Pokémon na API
     async fetchPokemon(pokemon) {
+        // Verifica se o Pokémon já está no cache
+        if (pokemonCache[pokemon]) {
+            return pokemonCache[pokemon];
+        }
+
         // Faz uma requisição à API do Pokémon
         const APIResponse = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
         // Verifica se a requisição foi bem-sucedida
         if (APIResponse.status == 200) {
-            // armazena os dados da resposta da API na variável data
+            // Armazena os dados da resposta da API na variável data
             const data = await APIResponse.json();
+            // Armazena os dados no cache
+            pokemonCache[pokemon] = data;
             return data; // Retorna os dados do Pokémon
         }
     },
@@ -43,9 +53,9 @@ const pokemon = {
         // Busca os dados do Pokémon
         const data = await this.fetchPokemon(pokemon);
         // Verifica se os dados foram encontrados
-        if (data) {
+        if (data != undefined) {
             // Exibe a imagem e informações do Pokémon
-            this.image.style.display = "";
+            this.image.style.display = ""; // Evita o bug da imagem
             this.name.innerHTML = data.name;
             this.number.innerHTML = data.id;
             this.image.src = data['sprites']['versions']['generation-v']['black-white']['animated']['front_default'];
@@ -53,11 +63,23 @@ const pokemon = {
             input.value = '';
             // Atualiza o número do Pokémon atual
             searchPokemon = data.id;
+
+            // Pré-carrega o Pokémon anterior e seguinte
+            this.preloadPokemon(searchPokemon - 1);
+            this.preloadPokemon(searchPokemon + 1);
         } else {
             // Caso não encontre, exibe mensagem de não encontrado
             this.image.style.display = 'none';
             this.name.innerHTML = "Not Found :c";
             this.number.innerHTML = "";
+        }
+    },
+
+    // Função para pré-carregar os dados do Pokémon
+    async preloadPokemon(pokemon) {
+        // Verifica se o Pokémon está no cache, caso contrário, faz a requisição
+        if (!pokemonCache[pokemon] && pokemon > 0) {
+            await this.fetchPokemon(pokemon);
         }
     }
 }

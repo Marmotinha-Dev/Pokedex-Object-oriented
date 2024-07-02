@@ -11,12 +11,15 @@ Este projeto é uma aplicação web simples para buscar informações sobre Pok�
 - 🔍 Pesquisar Pokémons pelo nome ou número na Pokédex.
 - ⏭️ Navegar entre os Pokémons usando botões de próximo e anterior.
 - 📊 Exibir o nome, número e imagem animada do Pokémon.
+- 💾 Armazenar em cache os dados dos Pokémons já buscados para evitar múltiplas chamadas à API para o mesmo Pokémon.
+- ⚡ Pré-carregar os dados do Pokémon seguinte e anterior para que a navegação seja mais rápida.
 
 ## 🛠️ Estrutura do Código
 
 ### 🔄 Variáveis Globais
 
 - `searchPokemon`: Armazena o número do Pokémon a ser buscado inicialmente.
+- `pokemonCache`: Objeto utilizado para armazenar os dados dos Pokémons já buscados.
 
 ### 🔎 Seleção de Elementos
 
@@ -39,12 +42,18 @@ Este objeto representa um Pokémon e contém métodos para buscar e renderizar s
 
 1. **`fetchPokemon(pokemon)`**:
     - Método assíncrono que busca dados do Pokémon na API.
-    - Faz uma requisição à API do Pokémon e retorna os dados do Pokémon se a requisição for bem-sucedida.
+    - Verifica se os dados do Pokémon estão no cache e os retorna se estiverem.
+    - Faz uma requisição à API do Pokémon e armazena os dados no cache se a requisição for bem-sucedida.
 
 2. **`render(pokemon)`**:
     - Método assíncrono que renderiza os dados do Pokémon na tela.
     - Exibe uma mensagem de "Loading..." enquanto os dados estão sendo buscados.
     - Exibe os dados do Pokémon se encontrados, caso contrário, exibe uma mensagem de "Not Found :c".
+    - Pré-carrega os dados do Pokémon anterior e seguinte para melhorar a navegação.
+
+3. **`preloadPokemon(pokemon)`**:
+    - Método assíncrono que pré-carrega os dados do Pokémon anterior ou seguinte.
+    - Verifica se os dados do Pokémon estão no cache e os busca da API se não estiverem.
 
 ## 📑 Referências
 
